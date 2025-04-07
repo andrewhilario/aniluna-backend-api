@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import (
+    BookmarkDetailByIdView,
     CustomTokenObtainPairView,
     UserCreateView,
     UserDetailView,
@@ -19,7 +20,7 @@ urlpatterns = [
     path("bookmarks/", BookmarkListView.as_view(), name="bookmark_list"),
     path(
         "bookmarks/<str:anime_id>/detail/",
-        BookmarkDetailView.as_view(),
+        BookmarkDetailByIdView.as_view(),
         name="bookmark_detail_by_id",
     ),
     path("bookmarks/<int:pk>/", BookmarkDetailView.as_view(), name="bookmark_detail"),
