@@ -55,7 +55,8 @@ class BookmarkDetailByIdView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Bookmark.objects.filter(user=self.request.user)
+        anime_id = self.kwargs.get("anime_id")
+        return Bookmark.objects.filter(user=self.request.user, anime__anime_id=anime_id)
 
 
 class BookmarkDetailView(generics.DestroyAPIView):

@@ -18,7 +18,7 @@ urlpatterns = [
     path("anime/", AnimeListView.as_view(), name="anime_list"),
     path("bookmarks/", BookmarkListView.as_view(), name="bookmark_list"),
     path(
-        "bookmarks/<int:pk>/detail/",
+        "bookmarks/<str:anime_id>/detail/",
         BookmarkDetailView.as_view(),
         name="bookmark_detail_by_id",
     ),
