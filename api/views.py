@@ -46,12 +46,7 @@ class BookmarkListView(generics.ListCreateAPIView):
         return Bookmark.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        anime_id = self.request.data.get("anime")
-        if Bookmark.objects.filter(user=self.request.user, anime_id=anime_id).exists():
-            return Response(
-                {"detail": "This anime is already bookmarked."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        # The validation and creation is now handled by the serializer
         serializer.save(user=self.request.user)
 
 

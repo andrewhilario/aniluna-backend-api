@@ -41,7 +41,7 @@ class AnimeSerializer(serializers.ModelSerializer):
 
 
 class BookmarkSerializer(serializers.ModelSerializer):
-    anime = AnimeSerializer(read_only=True)
+    anime = AnimeSerializer()
 
     class Meta:
         model = Bookmark
@@ -49,7 +49,17 @@ class BookmarkSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         anime_data = validated_data.pop("anime")
-        anime, _ = Anime.objects.get_or_create(**anime_data)
+
+        anime, created = Anime.objects.get_or_create(
+            title=anime_data["title"],  # Use your actual unique field here
+            defaults=anime_data,
+        )
+
+        if Bookmark.objects.filter(
+            user=self.validated_data.get("user"), anime=anime
+        ).exists():
+            raise serializers.ValidationError("This anime is already bookmarked.")
+
         return Bookmark.objects.create(anime=anime, **validated_data)
 
 
