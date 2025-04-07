@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-a69m76y9(4u6125lc&39r3pxfkv%6%9!1_+fw+g*q=be%-is#4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app", "now.sh", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [".vercel.app", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "api",
     "drf_yasg",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,31 @@ SIMPLE_JWT = {
 }
 
 WSGI_APPLICATION = "ani_luna_backend_api.wsgi.application"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
