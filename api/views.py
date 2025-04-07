@@ -53,10 +53,11 @@ class BookmarkListView(generics.ListCreateAPIView):
 class BookmarkDetailByIdView(generics.RetrieveAPIView):
     serializer_class = BookmarkSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "anime__anime_id"  # Add this line
+    lookup_url_kwarg = "anime_id"  # Add this line
 
     def get_queryset(self):
-        anime_id = self.kwargs.get("anime_id")
-        return Bookmark.objects.filter(user=self.request.user, anime__anime_id=anime_id)
+        return Bookmark.objects.filter(user=self.request.user)
 
 
 class BookmarkDetailView(generics.DestroyAPIView):
