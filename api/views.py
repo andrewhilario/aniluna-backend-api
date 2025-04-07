@@ -11,6 +11,7 @@ from .serializers import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
+from rest_framework.pagination import PageNumberPagination
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -38,9 +39,14 @@ class AnimeListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
 
+class BookmarkPagination(PageNumberPagination):
+    page_size = 10  # Set the number of items per page
+
+
 class BookmarkListView(generics.ListCreateAPIView):
     serializer_class = BookmarkSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = BookmarkPagination
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
