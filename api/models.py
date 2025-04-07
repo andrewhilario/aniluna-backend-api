@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    member_since = models.DateField()
+    member_since = models.DateField(auto_now_add=True)
     bio = models.TextField(blank=True, null=True)
 
 
