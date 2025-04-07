@@ -2,6 +2,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from .models import User, Anime, Bookmark, WatchHistory, Review
 from .serializers import (
+    UserCreateSerializer,
     UserSerializer,
     AnimeSerializer,
     BookmarkSerializer,
@@ -18,16 +19,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerializer
     permission_classes = [permissions.AllowAny]
-
-    def perform_create(self, serializer):
-        password = self.request.data.get("password")
-        if not password:
-            raise ValueError("Password is required.")
-        user = serializer.save()
-        user.set_password(password)
-        user.save()
 
 
 class UserDetailView(generics.RetrieveUpdateAPIView):
