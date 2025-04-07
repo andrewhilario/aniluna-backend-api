@@ -47,6 +47,11 @@ class BookmarkSerializer(serializers.ModelSerializer):
         model = Bookmark
         fields = ("id", "anime", "created_at")
 
+    def create(self, validated_data):
+        anime_data = validated_data.pop("anime")
+        anime, _ = Anime.objects.get_or_create(**anime_data)
+        return Bookmark.objects.create(anime=anime, **validated_data)
+
 
 class WatchHistorySerializer(serializers.ModelSerializer):
     anime = AnimeSerializer(read_only=True)
