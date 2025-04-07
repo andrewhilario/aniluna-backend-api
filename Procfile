@@ -1,0 +1,1 @@
+web: gunicorn ani_luna_backend_api.wsgi --log-file -
