@@ -21,6 +21,14 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
+    def perform_create(self, serializer):
+        password = self.request.data.get("password")
+        if not password:
+            raise ValueError("Password is required.")
+        user = serializer.save()
+        user.set_password(password)
+        user.save()
+
 
 class UserDetailView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
